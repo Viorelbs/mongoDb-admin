@@ -1,0 +1,23 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --background-start-rgb: 214, 219, 220;
+  --background-end-rgb: 255, 255, 255;
+}
+
+h1 {
+  font-size: calc(26px + (50 - 26) * ((100vw - 300px) / (2000 - 300)));
+}
+h2 {
+  font-size: calc(24px + (50 - 24) * ((100vw - 300px) / (2000 - 300)));
+}
+h3 {
+  font-size: calc(18px + (24 - 18) * ((100vw - 300px) / (2000 - 300)));
+}
+
+p {
+  font-size: calc(14px + (20 - 14) * ((100vw - 300px) / (2000 - 300)));
+}
