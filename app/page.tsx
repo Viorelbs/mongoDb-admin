@@ -1,13 +1,34 @@
 "use client";
-import { signIn, useSession } from "next-auth/react";
+import axios from "axios";
+import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
+import Sidebar from "./components/Sidebar";
 
 export default function Home() {
   const { data: session } = useSession({
     required: true,
     onUnauthenticated() {
-      redirect("/signin?callbackUrl=/protected/client");
+      redirect("/signin");
     },
   });
-  return <button onClick={() => signIn()}>Sign in</button>;
+
+  const prodObj = {
+    title: "Produs de test 4444 ",
+    description: "Acesta este un test4444",
+  };
+
+  async function makeApiCall() {
+    await axios.post("api/products", {
+      body: prodObj,
+    });
+  }
+
+  // return <button onClick={makeApiCall}>Send req</button>;
+  return (
+    <div className="flex-[8] p-6 bg-gray-50">
+      <div className="bg-white">
+        <h1>TESTTTTTTTTTT</h1>
+      </div>
+    </div>
+  );
 }
