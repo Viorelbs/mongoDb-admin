@@ -1,4 +1,5 @@
 "use client";
+
 import {
   Card,
   Typography,
@@ -17,13 +18,14 @@ import {
   UserCircleIcon,
   Cog6ToothIcon,
   InboxIcon,
-  PowerIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import Loader from "../Common/Loader";
-import AvatarInfo from "../Common/AvatarInfo";
+import Loader from "../server/Loader";
+import AvatarInfo from "../server/AvatarInfo";
+import { signOut } from "next-auth/react";
+import LogoutBtn from "./LogoutBtn";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(0);
@@ -165,12 +167,7 @@ export default function Sidebar() {
             </ListItemPrefix>
             Settings
           </ListItem>
-          <ListItem>
-            <ListItemPrefix>
-              <PowerIcon className="h-5 w-5" />
-            </ListItemPrefix>
-            Log Out
-          </ListItem>
+          <LogoutBtn logout={signOut} />
         </List>
       </Card>
     </div>

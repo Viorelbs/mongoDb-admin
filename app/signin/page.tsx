@@ -1,27 +1,35 @@
 "use client";
-import { Button, Card } from "@material-tailwind/react";
+import {
+  Card,
+  CardHeader,
+  CardFooter,
+  Typography,
+  Button,
+} from "@material-tailwind/react";
+import { AiOutlineGoogle } from "react-icons/ai";
+
 import { signIn, useSession } from "next-auth/react";
-import { useSearchParams } from "next/navigation";
 
 const SignInPage = () => {
   const { data: session } = useSession();
-  console.log(process.env.NEXT_PUBLIC_MONGODB_URI);
 
   return (
-    <section className="flex min-h-full overflow-hidden pt-16 sm:py-28">
-      <Card className="border m-auto lg:max-w-xl w-full p-4 text-center">
-        <h1 className="text-2xl font-medium mb-4">Welcome</h1>
-        <pre>{JSON.stringify(session)}</pre>
-
-        <Button
+    <Card className="w-96">
+      <CardHeader className="mb-4 grid h-28 place-items-center">
+        <h1 className="text-xl">Welcome back</h1>
+      </CardHeader>
+      <CardFooter className="pt-0">
+        <button
+          className="flex items-center justify-center mt-6 gap-4 bg-blue-400 w-full text-white py-2 rounded-md "
           onClick={() =>
             signIn("google", { callbackUrl: `${window.location.origin}` })
           }
         >
+          <AiOutlineGoogle />
           Sign In
-        </Button>
-      </Card>
-    </section>
+        </button>
+      </CardFooter>
+    </Card>
   );
 };
 
