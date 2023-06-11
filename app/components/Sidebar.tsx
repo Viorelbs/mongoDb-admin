@@ -1,3 +1,4 @@
+"use client";
 import {
   Card,
   Typography,
@@ -20,6 +21,9 @@ import {
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
+import { useSession } from "next-auth/react";
+import Loader from "../Common/Loader";
+import AvatarInfo from "../Common/AvatarInfo";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(0);
@@ -28,14 +32,22 @@ export default function Sidebar() {
     setOpen(open === value ? 0 : value);
   };
 
+  const { data: session } = useSession();
+
+  console.log(session);
   return (
     <div className="flex-[2]">
       {" "}
       <Card className="h-screen overflow-y-auto w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
-          <Typography variant="h5" color="blue-gray">
-            Sidebar
-          </Typography>
+          {session ? (
+            <AvatarInfo
+              image={session.user?.image!}
+              name={session.user?.name!}
+            />
+          ) : (
+            <Loader size={6} />
+          )}
         </div>
         <List>
           <Accordion
