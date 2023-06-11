@@ -1,7 +1,8 @@
 "use client";
 import React from "react";
 import Sidebar from "../components/client/Sidebar";
-import { usePathname } from "next/navigation";
+import { redirect, usePathname } from "next/navigation";
+import { useSession } from "next-auth/react";
 
 export default function SidebarLayout({
   children,
@@ -9,6 +10,12 @@ export default function SidebarLayout({
   children: React.ReactNode;
 }) {
   const pathname = usePathname();
+  const { data: session } = useSession({
+    required: pathname.includes("signin") ? false : true,
+    onUnauthenticated() {
+      redirect("/signin");
+    },
+  });
   return (
     <>
       {pathname.includes("signin") ? (

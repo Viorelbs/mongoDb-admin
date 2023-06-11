@@ -26,10 +26,10 @@ import Loader from "../server/Loader";
 import AvatarInfo from "../server/AvatarInfo";
 import { signOut } from "next-auth/react";
 import LogoutBtn from "./LogoutBtn";
+import Link from "next/link";
 
 export default function Sidebar() {
   const [open, setOpen] = useState(0);
-
   const handleOpen = (value: number) => {
     setOpen(open === value ? 0 : value);
   };
@@ -78,12 +78,14 @@ export default function Sidebar() {
             </ListItem>
             <AccordionBody className="py-1">
               <List className="p-0">
-                <ListItem>
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  Analytics
-                </ListItem>
+                <Link href="/">
+                  <ListItem>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                    </ListItemPrefix>
+                    Analytics
+                  </ListItem>
+                </Link>
                 <ListItem>
                   <ListItemPrefix>
                     <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
@@ -131,12 +133,14 @@ export default function Sidebar() {
                   </ListItemPrefix>
                   Orders
                 </ListItem>
-                <ListItem>
-                  <ListItemPrefix>
-                    <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
-                  </ListItemPrefix>
-                  Products
-                </ListItem>
+                <Link href={"/products"}>
+                  <ListItem>
+                    <ListItemPrefix>
+                      <ChevronRightIcon strokeWidth={3} className="h-3 w-5" />
+                    </ListItemPrefix>
+                    Products
+                  </ListItem>
+                </Link>
               </List>
             </AccordionBody>
           </Accordion>
