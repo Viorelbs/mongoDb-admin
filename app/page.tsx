@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useSession } from "next-auth/react";
 import { redirect } from "next/navigation";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/client/Sidebar";
 
 export default function Home() {
   const { data: session } = useSession({
@@ -27,7 +27,7 @@ export default function Home() {
   return (
     <div className="flex-[8] p-6 bg-gray-50">
       <div className="bg-white">
-        <h1>TESTTTTTTTTTT</h1>
+        <h1>Dashboard</h1>
       </div>
     </div>
   );
