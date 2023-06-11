@@ -1,11 +1,6 @@
 import { mongooseConnect } from "@/lib/mongoose";
 import { Product } from "@/models/Product";
-import mongoose from "mongoose";
-import { NextResponse } from "next/server";
-
-export async function GET() {
-  return new Response("hi");
-}
+import { NextRequest, NextResponse } from "next/server";
 
 export async function POST(req: Request) {
   await mongooseConnect();
@@ -14,4 +9,10 @@ export async function POST(req: Request) {
   6;
   const prod = await Product.create({ title, description });
   return NextResponse.json({ prod });
+}
+
+export async function GET(req: Request) {
+  await mongooseConnect();
+  const products = await Product.find();
+  return NextResponse.json({ products });
 }
