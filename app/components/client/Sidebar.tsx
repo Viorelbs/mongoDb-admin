@@ -17,6 +17,7 @@ import {
   ShoppingBagIcon,
   UserCircleIcon,
   Cog6ToothIcon,
+  PhotoIcon,
   InboxIcon,
 } from "@heroicons/react/24/solid";
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
@@ -36,7 +37,6 @@ export default function Sidebar() {
 
   const { data: session } = useSession();
 
-  console.log(session);
   return (
     <div className="flex-[2]">
       {" "}
@@ -144,6 +144,14 @@ export default function Sidebar() {
               </List>
             </AccordionBody>
           </Accordion>
+          <Link href="/media">
+            <ListItem>
+              <ListItemPrefix>
+                <PhotoIcon className="h-5 w-5" />
+              </ListItemPrefix>
+              Media
+            </ListItem>
+          </Link>
           <ListItem>
             <ListItemPrefix>
               <InboxIcon className="h-5 w-5" />
