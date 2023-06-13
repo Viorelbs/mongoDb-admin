@@ -24,7 +24,7 @@ export default function RootLayout({
 
         <Provider>
           <SidebarLayout>
-            <div className="flex-[8] p-6 bg-gray-50">{children}</div>
+            <div className="flex-[8] p-6 bg-custom-gray">{children}</div>
           </SidebarLayout>
         </Provider>
         {/* </QueryClientProvider> */}
