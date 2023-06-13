@@ -16,7 +16,7 @@ export default function Home() {
   }
 
   return (
-    <div className="">
+    <div>
       <div className="bg-white">
         <h1>Dashboard</h1>
         {/* <button onClick={getProd}>Send req</button> */}
