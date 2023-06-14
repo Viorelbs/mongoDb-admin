@@ -1,29 +1,33 @@
-import React from "react";
-import imageOne from "../../../public/media/pictureOne.png";
-import imageTwo from "../../../public/media/Screenshot_60.png";
-import imageThree from "../../../public/media/Screenshot_6.png";
+import React, { useState } from "react";
 import Image from "next/image";
-import { TrashIcon } from "@heroicons/react/24/solid";
+import { Checkbox } from "@material-tailwind/react";
 
-import { Button } from "@material-tailwind/react";
+interface Props {
+  src: string;
+}
+export default function ImageCard({ src }: Props) {
+  const [checked, setChecked] = useState(false);
 
-export default function ImageCard() {
   return (
-    <div className="p-3 bg-white w-fit rounded-lg">
-      <Image
-        src={imageTwo}
-        alt="test"
-        width={150}
-        height={150}
-        className="max-w-[150px] max-h-[150px] w-full h-full rounded-md"
+    <div className="px-2 pb-3 bg-white rounded-lg relative">
+      <Checkbox
+        color={checked ? "red" : "blue"}
+        onClick={() => setChecked(!checked)}
       />
-      <div className="mt-3 flex justify-between">
-        <span className="text-sm text-ellipsis whitespace-nowrap overflow-hidden max-w-[120px] ">
+      <div className="relative pt-[62.5%]">
+        <Image
+          src={src}
+          alt="test"
+          width={150}
+          height={150}
+          className="w-full h-full object-contain absolute top-0 left-0"
+        />
+      </div>
+      <div className="mt-3 flex justify-between  pt-2 border-t border-gray-400">
+        <span className="text-sm text-gray-600 ">
           Poza de teste teste teste teste test
         </span>
-        <button className="flex items-center gap-1">
-          <TrashIcon className="grow w-4 h-4 text-red-700" />
-        </button>
+        <button className="flex items-center gap-1"></button>
       </div>
     </div>
   );

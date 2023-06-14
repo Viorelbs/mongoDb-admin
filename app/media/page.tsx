@@ -1,10 +1,12 @@
 "use client";
 import axios from "axios";
-import { ChangeEvent, useEffect, useState } from "react";
+import { useState } from "react";
 import UploadBtn from "../components/client/UploadBtn";
 import ImageCard from "../components/server/ImageCard";
 import dynamic from "next/dynamic";
 import Loader from "../components/server/Loader";
+import { useQuery } from "@tanstack/react-query";
+import { StorageObjectInterface } from "@/typings";
 
 const DynamicModal = dynamic(
   () => import("../components/client/UploadFileModal"),
@@ -17,15 +19,16 @@ export default function MediaPage() {
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
 
-  const [buckets, setBuckets] = useState();
+  // Querying images from storage
+  const { isLoading, data } = useQuery({
+    queryKey: ["images"],
+    queryFn: async () => {
+      const { data } = await axios.get("api/upload");
+      return data as StorageObjectInterface[];
+    },
+  });
 
-  //   useEffect(() => {
-  //     async function getBuckets() {
-  //       const response = await axios.post("api/upload");
-  //       setBuckets(response.data);
-  //     }
-  //     getBuckets();
-  //   }, []);
+  console.log(data);
 
   return (
     <div>
@@ -37,15 +40,14 @@ export default function MediaPage() {
         </div>
       </div>
 
-      <div className="flex flex-wrap gap-4">
-        <ImageCard />
-        <ImageCard />
-        <ImageCard />
-        <ImageCard />
-        <ImageCard />
-        <ImageCard />
-        <ImageCard />
-        <ImageCard />
+      <div className="grid grid-cols-4 gap-4">
+        {isLoading ? (
+          <Loader size={6} />
+        ) : (
+          data?.map((object) => (
+            <ImageCard key={object.objectsData.ETag} src={object.url} />
+          ))
+        )}
       </div>
     </div>
   );
