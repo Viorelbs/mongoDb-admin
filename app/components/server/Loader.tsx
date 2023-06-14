@@ -8,7 +8,7 @@ function Loader({ size }: Props) {
     >
       <svg
         role="status"
-        className={`m-auto h-${size} w-${size} animate-spin text-gray-200 dark:text-transparent fill-[orange]`}
+        className={`m-auto h-${size} w-${size} animate-spin text-gray-200 dark:text-transparent fill-[blue]`}
         viewBox="0 0 100 101"
         fill="none"
         xmlns="http://www.w3.org/2000/svg"
