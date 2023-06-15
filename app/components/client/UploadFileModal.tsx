@@ -28,7 +28,7 @@ export default function UploadFileModal({ handleOpen, open }: Props) {
   // Uploading files
   const uploadFile = async () => {
     setIsLoading(true);
-    await axios.post("api/upload", { body: uploadedFiles });
+    await axios.post("api/media", { body: uploadedFiles });
     setIsLoading(false);
     setUploadedFiles([]);
     toast.success("Your assets has been uploaded!", { duration: 2500 });
@@ -135,7 +135,7 @@ export default function UploadFileModal({ handleOpen, open }: Props) {
           </div>
         ) : null}
         {isLoading ? (
-          <div className="absolute top-0 left-0 w-full h-full grid place-content-center bg-white/70">
+          <div className="absolute top-0 left-0 w-full h-full z-50 grid place-content-center bg-white/70">
             <Loader size={9} />
           </div>
         ) : null}
