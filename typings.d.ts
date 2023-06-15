@@ -1,6 +1,4 @@
 export interface StorageObjectInterface {
-  objectsData: {
-    ETag: string;
-  };
+  name: string;
   url: string;
 }
