@@ -8,12 +8,14 @@ interface Props {
   name: string;
   handleChecked: (id: string) => void;
   deleted: string[];
+  isChecked: boolean;
 }
 export default function ImageCard({
   src,
   name,
   handleChecked,
   deleted,
+  isChecked,
 }: Props) {
   const itsDeleted = deleted.includes(name);
   return (
@@ -23,7 +25,12 @@ export default function ImageCard({
           <Loader size={6} />
         </div>
       ) : null}
-      <Checkbox color="red" onClick={() => handleChecked(name)} />
+      <Checkbox
+        color="red"
+        id={name}
+        checked={isChecked}
+        onClick={() => handleChecked(name)}
+      />
       <div className="relative pt-[62.5%]">
         <Image
           src={src}
@@ -34,7 +41,9 @@ export default function ImageCard({
         />
       </div>
       <div className="mt-3 flex justify-between  pt-2 border-t border-gray-400">
-        <span className="text-sm text-gray-600 ">{name}</span>
+        <span className="text-sm text-gray-600 overflow-hidden text-ellipsis">
+          {name}
+        </span>
         <button className="flex items-center gap-1"></button>
       </div>
     </div>
