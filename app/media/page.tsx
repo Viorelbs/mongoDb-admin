@@ -1,6 +1,6 @@
 "use client";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import UploadBtn from "../components/client/UploadBtn";
 import ImageCard from "../components/server/ImageCard";
 import dynamic from "next/dynamic";
@@ -19,6 +19,7 @@ const DynamicModal = dynamic(
 );
 export default function MediaPage() {
   const [checked, setChecked] = useState<string[]>([]);
+  const [checkAll, setCheckAll] = useState(false);
   const [deleted, setDeleted] = useState<any[]>([]);
   const [open, setOpen] = useState(false);
   const handleOpen = () => setOpen((cur) => !cur);
@@ -41,14 +42,32 @@ export default function MediaPage() {
   };
 
   const deleteObjects = async () => {
-    await axios.patch("api/media", { body: checked });
-    setChecked([]);
-    setDeleted(checked);
-    toast.error("Your files have been deleted", {
-      duration: 2500,
-    });
+    if (window.confirm("Are you sure you want to delete these assets?")) {
+      await axios.patch("api/media", { body: checked });
+      setChecked([]);
+      setDeleted(checked);
+      toast.error("Your files have been deleted", {
+        duration: 2500,
+      });
+    }
   };
 
+  const handleCheckedAll = () => {
+    if (checkAll) {
+      setChecked([]);
+    } else {
+      const allNames = data!.map((object) => object.name);
+      setChecked(allNames);
+    }
+    setCheckAll(!checkAll);
+  };
+
+  // Making sure to check to set checkedall to false if the list is empty
+  useEffect(() => {
+    if (checked.length === 0) {
+      setCheckAll(false);
+    }
+  }, [checked]);
   return (
     <div>
       <Toaster
@@ -63,10 +82,12 @@ export default function MediaPage() {
       <div className="flex justify-between items-center py-4 border-b border-gray-600 mb-8">
         <div>
           <h1 className="font-bold">File Manager</h1>
-          {checked.length > 0 ? (
+          {checked?.length > 0 ? (
             <MediaButtons
+              checkAll={checkAll}
               assetsNr={checked.length}
               deleteObjects={deleteObjects}
+              handleCheckedAll={handleCheckedAll}
             />
           ) : null}
         </div>
@@ -86,6 +107,7 @@ export default function MediaPage() {
               deleted={deleted}
               name={object.name}
               handleChecked={handleChecked}
+              isChecked={checked.includes(object.name) || false}
             />
           ))
         )}

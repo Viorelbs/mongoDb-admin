@@ -6,7 +6,6 @@ import { Readable } from "stream";
 
 export async function POST(req: Request) {
   const { body } = await req.json();
-  await mongooseConnect();
 
   const uploadPromises = body.map(
     async (obj: { url: string; name: string }) => {
@@ -25,6 +24,7 @@ export async function POST(req: Request) {
         Body: imageStream,
       };
 
+      await mongooseConnect();
       await Media.create({ title: obj.name });
       return s3
         .upload(params, {
@@ -64,7 +64,6 @@ export async function GET() {
   return NextResponse.json(objectsData);
 }
 
-// De adaugat mongoDb + key
 export async function PATCH(req: Request) {
   const { body } = await req.json();
 
@@ -76,5 +75,7 @@ export async function PATCH(req: Request) {
     return await s3.deleteObject(params).promise();
   });
 
+  await mongooseConnect();
+  await Media.deleteMany({ title: { $in: body } });
   return NextResponse.json(deleteObjects);
 }
