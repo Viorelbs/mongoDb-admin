@@ -8,3 +8,8 @@ export async function fetchMedia() {
 export async function deleteMedia(files: string) {
   return axios.patch("api/media", { body: files });
 }
+
+// Create folder
+export async function createFolder(title: string) {
+  return axios.post("api/folder", { body: "title" });
+}
