@@ -8,13 +8,16 @@ import Loader from "../components/server/Loader";
 import { useQuery } from "@tanstack/react-query";
 import { StorageObjectInterface } from "@/typings";
 import MediaButtons from "../components/client/MediaButtons";
-import { Toaster, toast } from "react-hot-toast";
+import { Toaster } from "react-hot-toast";
 import { deleteMedia } from "./mediaApi";
 import {
   deleteObjects,
   handleChecked,
   handleCheckedAll,
 } from "./MediaHandlers";
+import { Button } from "@material-tailwind/react";
+import { FolderPlusIcon } from "@heroicons/react/24/solid";
+import FolderCard from "../components/client/FolderCard";
 
 const DynamicModal = dynamic(
   () => import("../components/client/UploadFileModal"),
@@ -61,7 +64,7 @@ export default function MediaPage() {
     }
   }, [checked]);
   return (
-    <div>
+    <div className="space-y-10">
       <Toaster
         position="bottom-center"
         toastOptions={{
@@ -71,7 +74,7 @@ export default function MediaPage() {
         }}
       />
       {open ? <DynamicModal handleOpen={handleOpen} open={open} /> : null}
-      <div className="flex justify-between items-center py-4 border-b border-gray-600 mb-8">
+      <div className="flex justify-between items-center sticky top-0 z-50 py-4 border-b border-gray-600 !mt-0 bg-custom-gray">
         <div>
           <h1 className="font-bold">File Manager</h1>
           {checked?.length > 0 ? (
@@ -83,26 +86,38 @@ export default function MediaPage() {
             />
           ) : null}
         </div>
-        <div>
+
+        <div className="flex gap-4 ">
+          <Button variant="outlined" className="flex gap-2 items-center ">
+            <FolderPlusIcon className="w-6 h-6" />
+            Add folder
+          </Button>
           <UploadBtn handleOpen={handleOpen} />
         </div>
       </div>
+      <div>
+        <h2 className="subtitle">Folders</h2>
+        <FolderCard />
+      </div>
 
-      <div className="grid grid-cols-4 gap-4">
-        {isLoading ? (
-          <Loader size={6} />
-        ) : (
-          data?.map((object: StorageObjectInterface) => (
-            <ImageCard
-              key={object.name}
-              src={object.url}
-              deleted={deleted}
-              name={object.name}
-              handleChecked={handleCheckedWrapper}
-              isChecked={checked.includes(object.name) || false}
-            />
-          ))
-        )}
+      <div>
+        <h2 className="subtitle">Images</h2>
+        <div className="grid grid-cols-4 gap-4">
+          {isLoading ? (
+            <Loader size={6} />
+          ) : (
+            data?.map((object: StorageObjectInterface) => (
+              <ImageCard
+                key={object.name}
+                src={object.url}
+                deleted={deleted}
+                name={object.name}
+                handleChecked={handleCheckedWrapper}
+                isChecked={checked.includes(object.name) || false}
+              />
+            ))
+          )}
+        </div>
       </div>
     </div>
   );

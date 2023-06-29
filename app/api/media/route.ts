@@ -35,7 +35,6 @@ export async function POST(req: Request) {
   );
 
   await Promise.all(uploadPromises);
-
   return NextResponse.json({ message: "Object uploaded successfully" });
 }
 
