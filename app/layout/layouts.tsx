@@ -3,6 +3,9 @@ import React from "react";
 import Sidebar from "../components/client/Sidebar";
 import { redirect, usePathname } from "next/navigation";
 import { useSession } from "next-auth/react";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+
+const queryClient = new QueryClient();
 
 export default function SidebarLayout({
   children,
@@ -16,18 +19,21 @@ export default function SidebarLayout({
       redirect("/signin");
     },
   });
+
   return (
     <>
-      {pathname.includes("signin") ? (
-        <main className="min-w-screen min-h-screen grid place-content-center">
-          {children}
-        </main>
-      ) : (
-        <main className="flex">
-          <Sidebar />
-          {children}
-        </main>
-      )}
+      <QueryClientProvider client={queryClient}>
+        {pathname.includes("signin") ? (
+          <main className="min-w-screen min-h-screen grid place-content-center">
+            {children}
+          </main>
+        ) : (
+          <main className="flex">
+            <Sidebar />
+            {children}
+          </main>
+        )}
+      </QueryClientProvider>
     </>
   );
 }

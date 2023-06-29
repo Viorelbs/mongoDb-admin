@@ -1,7 +1,6 @@
 "use client";
 import axios from "axios";
-import React, { useEffect } from "react";
-import { useState } from "react";
+import React, { ChangeEvent, useEffect, useState } from "react";
 
 export default function Products() {
   const [products, setProducts] = useState();
@@ -17,5 +16,5 @@ export default function Products() {
 
   console.log(products);
 
-  return <div>page</div>;
+  return <h1>Product page</h1>;
 }
