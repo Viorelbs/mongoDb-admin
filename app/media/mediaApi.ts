@@ -13,3 +13,9 @@ export async function deleteMedia(files: string) {
 export async function createFolder(title: string) {
   return axios.post("api/folder", { body: "title" });
 }
+
+// Get folders
+export async function getFolders() {
+  const { data } = await axios.get("api/media/folder");
+  return data;
+}

@@ -2,7 +2,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
 import UploadBtn from "../components/client/UploadBtn";
-import ImageCard from "../components/server/ImageCard";
+import ImageCard from "../components/ImageCard";
 import dynamic from "next/dynamic";
 import Loader from "../components/server/Loader";
 import { useQuery } from "@tanstack/react-query";
@@ -15,23 +15,31 @@ import {
   handleChecked,
   handleCheckedAll,
 } from "./MediaHandlers";
-import { Button } from "@material-tailwind/react";
-import { FolderPlusIcon } from "@heroicons/react/24/solid";
 import FolderCard from "../components/client/FolderCard";
+import AddFolderBtn from "../components/client/AddFolderBtn";
+import ModalHandler from "../components/client/ModalHandler";
+import FoldersSection from "../components/client/FoldersSection";
 
-const DynamicModal = dynamic(
+const DynamicUploadFileModal = dynamic(
   () => import("../components/client/UploadFileModal"),
   {
     loading: () => <Loader size={6} />,
     ssr: false,
   }
 );
+
+const DynamicAddFolderModal = dynamic(
+  () => import("../components/client/AddFolderModal"),
+  {
+    loading: () => <Loader size={6} />,
+    ssr: false,
+  }
+);
+
 export default function MediaPage() {
   const [checked, setChecked] = useState<string[]>([]);
   const [checkAll, setCheckAll] = useState(false);
   const [deleted, setDeleted] = useState<any[]>([]);
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen((cur) => !cur);
 
   // Querying images from storage
   const { isLoading, data } = useQuery({
@@ -63,6 +71,7 @@ export default function MediaPage() {
       setCheckAll(false);
     }
   }, [checked]);
+
   return (
     <div className="space-y-10">
       <Toaster
@@ -73,7 +82,6 @@ export default function MediaPage() {
           },
         }}
       />
-      {open ? <DynamicModal handleOpen={handleOpen} open={open} /> : null}
       <div className="flex justify-between items-center sticky top-0 z-50 py-4 border-b border-gray-600 !mt-0 bg-custom-gray">
         <div>
           <h1 className="font-bold">File Manager</h1>
@@ -88,18 +96,17 @@ export default function MediaPage() {
         </div>
 
         <div className="flex gap-4 ">
-          <Button variant="outlined" className="flex gap-2 items-center ">
-            <FolderPlusIcon className="w-6 h-6" />
-            Add folder
-          </Button>
-          <UploadBtn handleOpen={handleOpen} />
+          <ModalHandler
+            Button={UploadBtn}
+            DynamicModal={DynamicUploadFileModal}
+          />
+          <ModalHandler
+            Button={AddFolderBtn}
+            DynamicModal={DynamicAddFolderModal}
+          />
         </div>
       </div>
-      <div>
-        <h2 className="subtitle">Folders</h2>
-        <FolderCard />
-      </div>
-
+      <FoldersSection />
       <div>
         <h2 className="subtitle">Images</h2>
         <div className="grid grid-cols-4 gap-4">

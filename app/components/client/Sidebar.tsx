@@ -38,7 +38,7 @@ export default function Sidebar() {
   const { data: session } = useSession();
 
   return (
-    <div className="flex-[2]">
+    <div className="flex-[2] sticky top-0 h-full">
       {" "}
       <Card className="h-screen overflow-y-auto w-full max-w-[20rem] p-4 shadow-xl shadow-blue-gray-900/5">
         <div className="mb-2 p-4">
