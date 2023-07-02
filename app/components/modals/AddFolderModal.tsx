@@ -3,9 +3,9 @@ import { Button, Dialog, Input } from "@material-tailwind/react";
 import React, { ChangeEvent, useEffect, useState } from "react";
 import { Toaster, toast } from "react-hot-toast";
 import { XMarkIcon } from "@heroicons/react/24/solid";
-import axios from "axios";
+import Loader from "../common/Loader";
 import { FormValidator } from "@/services/formValidator";
-import Loader from "../server/Loader";
+import { createFolder } from "@/app/media/mediaApi";
 
 interface Props {
   handleOpen: () => void;
@@ -16,6 +16,7 @@ export default function AddFolderModal({ handleOpen, open }: Props) {
   const [value, setValue] = useState<string>("");
   const [errors, setErrors] = useState<string[]>([]);
   const [loading, setLoading] = useState(false);
+
   const handleClose = () => {
     if (value.length !== 0) {
       window.confirm("Are you sure you want to close modal?") && handleOpen();
@@ -54,11 +55,7 @@ export default function AddFolderModal({ handleOpen, open }: Props) {
 
   const handleCreateFolder = async () => {
     setLoading(true);
-    await axios.post("api/media/folder", {
-      body: {
-        title: value,
-      },
-    });
+    await createFolder(value);
     toast.success("Your folder has been created!", { duration: 2500 });
     setLoading(false);
     handleOpen();

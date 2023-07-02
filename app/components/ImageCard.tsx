@@ -1,7 +1,8 @@
+"use client";
 import React, { useState } from "react";
 import Image from "next/image";
 import { Checkbox } from "@material-tailwind/react";
-import Loader from "./server/Loader";
+import Loader from "./common/Loader";
 
 interface Props {
   src: string;

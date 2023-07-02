@@ -3,7 +3,6 @@ import { Button } from "@material-tailwind/react";
 import { Params } from "next/dist/shared/lib/router/utils/route-matcher";
 
 export default function Folder({ params }: Params) {
-  console.log(params);
   return (
     <div>
       <div className="flex justify-between items-center sticky top-0 z-50 py-4 border-b border-gray-600 !mt-0 bg-custom-gray">

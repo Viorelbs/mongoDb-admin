@@ -1,7 +1,7 @@
 "use client";
 import dynamic from "next/dynamic";
 import React, { useState } from "react";
-import Loader from "../server/Loader";
+import Loader from "../common/Loader";
 
 interface Props {
   Button: React.ComponentType<any>;

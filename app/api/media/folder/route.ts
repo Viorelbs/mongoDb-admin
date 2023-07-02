@@ -11,7 +11,7 @@ export async function GET(res: Response) {
 export async function POST(req: Request) {
   const { body } = await req.json();
   await mongooseConnect();
-  await Folders.create({ title: body.title });
+  await Folders.create({ title: body });
   return NextResponse.json({ message: "Folder created!" });
 }
 

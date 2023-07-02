@@ -23,8 +23,8 @@ import {
 import { ChevronRightIcon, ChevronDownIcon } from "@heroicons/react/24/outline";
 import { useState } from "react";
 import { useSession } from "next-auth/react";
-import Loader from "../server/Loader";
-import AvatarInfo from "../server/AvatarInfo";
+import Loader from "../common/Loader";
+import AvatarInfo from "../common/AvatarInfo";
 import { signOut } from "next-auth/react";
 import LogoutBtn from "./LogoutBtn";
 import Link from "next/link";

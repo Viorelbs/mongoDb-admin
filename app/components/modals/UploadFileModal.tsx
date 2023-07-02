@@ -5,9 +5,9 @@ import axios from "axios";
 import { CloudArrowUpIcon, XMarkIcon } from "@heroicons/react/24/solid";
 import { Button, Dialog } from "@material-tailwind/react";
 import { ChangeEvent, useState } from "react";
-import UploadImagesGrid from "./UploadImagesGrid";
+import UploadImagesGrid from "../client/UploadImagesGrid";
 import { Toaster, toast } from "react-hot-toast";
-import Loader from "../server/Loader";
+import Loader from "../common/Loader";
 
 interface Props {
   handleOpen: () => void;
